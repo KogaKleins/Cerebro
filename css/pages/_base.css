@@ -1,0 +1,47 @@
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    margin-left: var(--sidebar-collapsed);
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== PAGES - Base Styles ===== */
+.page {
+    display: none;
+    animation: pageSlideIn var(--transition-slow);
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes pageSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    background: linear-gradient(135deg, var(--primary-coffee), var(--primary-coffee-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}

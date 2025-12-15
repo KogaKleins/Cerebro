@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Cérebro - Sistema de gerenciamento interno com chat em tempo real, gamificação e controle de atividades">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#6366F1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cérebro">
+    
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>Cérebro - O Setor Mais Inteligente</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/cerebro-icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/cerebro-icon-512.png">
+    <link rel="apple-touch-icon" href="assets/icons/cerebro-icon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/cerebro-icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/cerebro-icon-512.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Fonts with font-display swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+    <!-- Pages (modularized) -->
+    <link rel="stylesheet" href="css/pages/_base.css">
+    <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="stylesheet" href="css/pages/coffee.css">
+    <link rel="stylesheet" href="css/pages/chat.css">
+    <link rel="stylesheet" href="css/pages/team.css">
+    <link rel="stylesheet" href="css/pages/modals.css">
+    <link rel="stylesheet" href="css/pages/stats.css">
+    <link rel="stylesheet" href="css/pages/achievements.css">
+    <link rel="stylesheet" href="css/pages/levels.css">
+    <link rel="stylesheet" href="css/pages/admin.css">
+    <!-- Other styles -->
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#mainContent" class="skip-link">Pular para o conteúdo principal</a>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" data-action="toggleTheme" aria-label="Alternar tema claro/escuro">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </button>
+    
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Abrir menu de navegação">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+    
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Login Page -->
+    <div id="loginPage" class="active">
+        <div class="login-container">
+            <div class="login-card glass-card">
+                <div class="login-logo">
+                    <div class="brain-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h1>🧠 Cérebro</h1>
+                    <p>O Setor Mais Inteligente da Gráfica</p>
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div id="loginError" class="login-error">
+                        Erro de login
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="loginUsername" 
+                            class="login-input" 
+                            placeholder="Usuário"
+                            autocomplete="username"
+                            required
+                        >
+                        <button type="button" class="admin-access-btn" id="adminAccessBtn" title="Acesso Administrativo">
+                            <i class="fas fa-user-shield"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            class="login-input" 
+                            placeholder="Senha"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Sistema exclusivo para membros do <span class="company">Cérebro</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar (fora do mainApp para ficar sempre acessível) -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>Cérebro</span>
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li class="nav-item active" data-page="home">
+                <a href="#home">
+                    <i class="fas fa-home"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="coffee">
+                <a href="#coffee">
+                    <i class="fas fa-coffee"></i>
+                    <span>Controle do Café</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="chat">
+                <a href="#chat">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat do Setor</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="stats">
+                <a href="#stats">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Estatísticas</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="achievements">
+                <a href="#achievements">
+                    <i class="fas fa-trophy"></i>
+                    <span>Conquistas</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="levels">
+                <a href="#levels">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Níveis</span>
+                    <span class="level-nav-badge" id="navLevelBadge"></span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="team">
+                <a href="#team">
+                    <i class="fas fa-users"></i>
+                    <span>Equipe</span>
+                </a>
+            </li>
+            <li class="nav-item admin-only" data-page="admin">
+                <a href="#admin">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Administração</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <!-- User Level Section - Professional Redesign -->
+            <div class="sidebar-level-section" id="sidebarLevelSection">
+                <div class="sidebar-level-card" id="sidebarLevelCard" onclick="window.navigateToLevels && window.navigateToLevels()">
+                    <!-- Círculo do Nível -->
+                    <div class="sidebar-level-circle tier-bronze" id="sidebarLevelCircle">
+                        <div class="sidebar-level-ring" id="sidebarLevelRing"></div>
+                        <div class="sidebar-level-content">
+                            <span class="sidebar-level-prefix">Nv.</span>
+                            <span class="sidebar-level-number" id="sidebarLevelNumber">1</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Info expandida -->
+                    <div class="sidebar-level-info">
+                        <div class="sidebar-level-rank">
+                            <span class="sidebar-level-rank-icon" id="sidebarRankIcon">🆕</span>
+                            <span id="sidebarRankName">Estagiário do Café</span>
+                        </div>
+                        <div class="sidebar-level-progress">
+                            <div class="sidebar-xp-bar">
+                                <div class="sidebar-xp-fill" id="userLevelProgress" style="width: 0%"></div>
+                            </div>
+                            <span class="sidebar-xp-text" id="userXPInfo">0/100 XP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-info">
+                <div class="avatar">
+                    <span>👤</span>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Carregando...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main App Container -->
+    <div id="mainApp" class="hidden">
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Home Page -->
+            <section class="page active" id="home">
+                <div class="page-header animated-header">
+                    <h1><span class="wave-emoji">🧠</span> Bem-vindo ao Cérebro!</h1>
+                    <p class="subtitle typewriter">O setor que pensa por todos (ou pelo menos tenta)</p>
+                </div>
+                
+                <!-- Hero Section Aprimorada -->
+                <div class="hero-section">
+                    <div class="hero-card glass-card hero-gradient">
+                        <div class="hero-particles" id="heroParticles"></div>
+                        <div class="brain-animation pulse-glow">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h2 class="hero-title">Aqui mora a inteligência da gráfica!</h2>
+                        <p class="hero-subtitle">Desenvolvimento • Fechamento • PCP • Qualidade</p>
+                        <div class="hero-badges">
+                            <span class="hero-badge"><i class="fas fa-bolt"></i> Rápido</span>
+                            <span class="hero-badge"><i class="fas fa-shield-alt"></i> Confiável</span>
+                            <span class="hero-badge"><i class="fas fa-star"></i> Top</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🆕 Quadro de Comunicados -->
+                <div class="announcements-board glass-card" id="announcementsBoard">
+                    <div class="announcements-header">
+                        <h3><i class="fas fa-bullhorn"></i> Comunicados</h3>
+                        <span class="announcements-badge" id="announcementsCount">0</span>
+                    </div>
+                    <div class="announcements-content" id="announcementsContent">
+                        <div class="announcement-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Carregando comunicados...</span>
+                        </div>
+                    </div>
+                    <div class="announcements-empty" id="announcementsEmpty" style="display: none;">
+                        <i class="fas fa-inbox"></i>
+                        <span>Nenhum comunicado no momento</span>
+                    </div>
+                </div>
+
+                <!-- Status do Setor em Tempo Real -->
+                <div class="sector-status glass-card">
+                    <div class="status-header">
+                        <h3><i class="fas fa-signal"></i> Status do Setor</h3>
+                        <span class="status-live"><span class="live-dot"></span> AO VIVO</span>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-item online">
+                            <i class="fas fa-users"></i>
+                            <div class="status-members-compact" id="homeOnlineMembers">
+                                <!-- Avatares compactos serão inseridos via JS -->
+                            </div>
+                            <span class="status-label">Online agora</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-calendar-day"></i>
+                            <span class="status-value" id="todayDate">-</span>
+                            <span class="status-label" id="todayWeekday">Carregando...</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="status-value" id="currentTime">--:--</span>
+                            <span class="status-label">Hora local</span>
+                        </div>
+                        <div class="status-item coffee-status">
+                            <i class="fas fa-mug-hot"></i>
+                            <span class="status-value" id="coffeeStatus">☕</span>
+                            <span class="status-label" id="coffeeStatusLabel">Verificando café...</span>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Stats Cards Animados -->
+                <div class="fun-stats">
+                    <div class="stat-card glass-card hover-lift" data-aos="fade-up">
+                        <div class="stat-icon coffee-icon">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number counter" id="totalCoffees" data-target="0">0</span>
+                            <span class="stat-label">Cafés tomados</span>
+                        </div>
+                        <div class="stat-trend up"><i class="fas fa-arrow-up"></i> Esta semana</div>
+                    </div>
+                    
+                    <div class="stat-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-icon idea-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalIdeas">∞</span>
+                            <span class="stat-label">Ideias geniais</span>
+                        </div>
+                        <div class="stat-trend"><i class="fas fa-infinity"></i> Ilimitadas</div>
+                    </div>
+                    
+                    <div class="stat-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-icon bug-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalBugs">0</span>
+                            <span class="stat-label">erros (confia)</span>
+                        </div>
+                        <div class="stat-trend perfect"><i class="fas fa-check"></i> Perfeição</div>
+                    </div>
+                    
+                    <div class="stat-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-icon fire-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="productivity">100%</span>
+                            <span class="stat-label">Produtividade*</span>
+                        </div>
+                        <div class="stat-trend fire"><i class="fas fa-fire-alt"></i> Em chamas</div>
+                    </div>
+                </div>
+
+                <!-- Atividade Recente -->
+                <div class="recent-activity glass-card">
+                    <div class="activity-header">
+                        <h3><i class="fas fa-history"></i> Atividade Recente</h3>
+                        <button class="btn-icon" data-action="refreshActivity" title="Atualizar">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="activity-timeline" id="activityTimeline">
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                            <div class="activity-content">
+                                <span class="activity-text">Carregando atividades...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Frase do Dia Aprimorada -->
+                <div class="fun-quotes glass-card">
+                    <div class="quote-decoration"><i class="fas fa-quote-left"></i></div>
+                    <h3><i class="fas fa-comment-dots"></i> Frase do Dia</h3>
+                    <p id="dailyQuote" class="quote-text">"Café é o combustível do cérebro!"</p>
+                    <div class="quote-author" id="quoteAuthor">- Anônimo Cafeínado</div>
+                    <button class="btn-primary ripple btn-quote" data-action="changeQuote" aria-label="Gerar nova frase do dia">
+                        <i class="fas fa-magic"></i> Nova Frase
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions glass-card">
+                    <h3><i class="fas fa-rocket"></i> Ações Rápidas</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" data-action="quickCoffee" title="Registrar café feito">
+                            <i class="fas fa-mug-hot"></i>
+                            <span>Fiz Café</span>
+                        </button>
+                        <button class="action-btn" data-action="openSpecialItemModal" title="Registrar item especial">
+                            <i class="fas fa-cookie-bite"></i>
+                            <span>Trouxe Comida</span>
+                        </button>
+                        <button class="action-btn" data-action="goToChat" title="Ir para o chat">
+                            <i class="fas fa-comments"></i>
+                            <span>Chat</span>
+                        </button>
+                        <button class="action-btn" data-action="goToStats" title="Ver estatísticas">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Stats</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 🆕 Caixa de Sugestões -->
+                <div class="suggestions-box glass-card" id="suggestionsBox">
+                    <div class="suggestions-header">
+                        <h3><i class="fas fa-lightbulb"></i> Caixa de Sugestões</h3>
+                        <span class="suggestions-subtitle">Sua ideia pode melhorar o sistema!</span>
+                    </div>
+                    <div class="suggestion-form">
+                        <input type="text" id="suggestionTitle" class="suggestion-input" placeholder="Título da sua ideia..." maxlength="100">
+                        <textarea id="suggestionContent" class="suggestion-textarea" placeholder="Descreva sua sugestão aqui... O que você gostaria de ver no Cérebro?" maxlength="2000" rows="3"></textarea>
+                        <div class="suggestion-footer">
+                            <span class="suggestion-char-count"><span id="suggestionCharCount">0</span>/2000</span>
+                            <button class="btn-primary ripple suggestion-submit" data-action="submitSuggestion">
+                                <i class="fas fa-paper-plane"></i> Enviar Sugestão
+                            </button>
+                        </div>
+                    </div>
+                    <div class="my-suggestions" id="mySuggestions" style="display: none;">
+                        <h4><i class="fas fa-list"></i> Minhas Sugestões</h4>
+                        <div class="my-suggestions-list" id="mySuggestionsList">
+                            <!-- Sugestões do usuário serão inseridas via JS -->
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="disclaimer">
+                    <small>*Produtividade pode variar de acordo com a quantidade de café disponível</small>
+                </div>
+            </section>
+
+        <!-- Coffee Control Page -->
+        <section class="page" id="coffee">
+            <div class="page-header">
+                <h1>☕ Controle do Café</h1>
+                <p class="subtitle">Quem fez? Quem trouxe? Quem deve?</p>
+            </div>
+            
+            <div class="coffee-dashboard">
+                <div class="coffee-hero glass-card">
+                    <div class="coffee-status">
+                        <i class="fas fa-mug-hot"></i>
+                        <div>
+                            <h3>Último café feito por:</h3>
+                            <span id="lastCoffeeMaker">Ninguém ainda hoje 😢</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary ripple" data-action="openCoffeeModal" data-type="made" aria-label="Registrar café feito">
+                        <i class="fas fa-plus"></i> Fiz café agora!
+                    </button>
+                </div>
+                
+                <div class="coffee-hero glass-card">
+                    <div class="coffee-status">
+                        <i class="fas fa-shopping-bag"></i>
+                        <div>
+                            <h3>Último café trazido por:</h3>
+                            <span id="lastCoffeeBringer">Ninguém lembra... 🤔</span>
+                        </div>
+                    </div>
+                    <button class="btn-secondary ripple" data-action="openCoffeeModal" data-type="brought" aria-label="Registrar café trazido">
+                        <i class="fas fa-plus"></i> Trouxe café!
+                    </button>
+                </div>
+                
+                <!-- Special Items Section -->
+                <div class="coffee-hero glass-card special-items-card">
+                    <div class="coffee-status">
+                        <i class="fas fa-cookie-bite"></i>
+                        <div>
+                            <h3>Trouxe algo especial?</h3>
+                            <span id="lastSpecialItem">Bolo, bolacha, biscoito... 🍪</span>
+                        </div>
+                    </div>
+                    <button class="btn-special-item ripple" data-action="openSpecialItemModal" aria-label="Registrar item especial">
+                        <i class="fas fa-gift"></i> Trouxe Comida!
+                    </button>
+                </div>
+            </div>
+            
+            <div class="coffee-ranking glass-card">
+                <h3><i class="fas fa-trophy"></i> Ranking do Café</h3>
+                <div class="ranking-tabs">
+                    <button class="tab-btn active" data-action="showRanking" data-type="made">Quem mais fez</button>
+                    <button class="tab-btn" data-action="showRanking" data-type="brought">Quem mais trouxe</button>
+                </div>
+                <ul class="ranking-list" id="coffeeRanking">
+                    <li class="ranking-item">
+                        <span class="rank">🥇</span>
+                        <span class="name">Carregando...</span>
+                        <span class="count">0</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="coffee-history glass-card">
+                <h3><i class="fas fa-history"></i> Histórico</h3>
+                <ul class="history-list" id="coffeeHistory">
+                    <li class="history-item">Nenhum registro ainda...</li>
+                </ul>
+            </div>
+            
+            <!-- Rating Section -->
+            <div class="coffee-rating-section glass-card">
+                <h3><i class="fas fa-star"></i> Avalie o Café de Hoje</h3>
+                <div id="todayCoffee">
+                    <div class="no-rating-msg">
+                        <p>Ninguém fez café ainda hoje...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Top Baristas -->
+            <div class="coffee-rating-section glass-card">
+                <h3><i class="fas fa-crown"></i> Melhores Baristas</h3>
+                <div class="top-baristas" id="topBaristasList">
+                    <div class="no-rating-msg">
+                        <p>Ainda não há avaliações suficientes...</p>
+                        <small>Avalie os cafés para ver o ranking!</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- POP - Procedimento Operacional Padrão do Café -->
+            <div class="coffee-pop-section glass-card">
+                <div class="pop-badge">📋 DOCUMENTO OFICIAL</div>
+                <div class="pop-content">
+                    <div class="pop-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    <div class="pop-info">
+                        <h3><i class="fas fa-certificate"></i> Manual Sagrado do Café</h3>
+                        <p class="pop-description">O Procedimento Operacional Padrão (POP) que todo barista do Cérebro deve seguir. Aqui está a arte milenar de fazer o café perfeito no coador!</p>
+                        <div class="pop-meta">
+                            <span><i class="fas fa-file-pdf"></i> CAFE 0001</span>
+                            <span><i class="fas fa-check-circle"></i> Documento Aprovado</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-pop ripple" data-action="openPdfModal">
+                    <i class="fas fa-book-open"></i> Consultar o Manual do Barista
+                </button>
+                <p class="pop-warning"><i class="fas fa-exclamation-triangle"></i> Atenção: Café ruim é falta de leitura do manual!</p>
+            </div>
+        </section>
+
+        <!-- Chat Page -->
+        <section class="page" id="chat">
+            <div class="page-header">
+                <h1>💬 Chat do Setor</h1>
+                <p class="subtitle">Comunicação em tempo real com a equipe</p>
+            </div>
+            
+            <div class="chat-container glass-card">
+                <!-- Barra compacta de membros online -->
+                <div class="chat-online-bar" id="chatOnlineBar">
+                    <div class="online-bar-label">
+                        <span class="online-dot-pulse"></span>
+                        <span>Online:</span>
+                    </div>
+                    <div class="online-bar-avatars" id="onlineBarAvatars">
+                        <!-- Avatares serão inseridos via JS -->
+                    </div>
+                </div>
+                
+                <!-- Chat Search -->
+                <div class="chat-search">
+                    <input type="text" id="chatSearch" placeholder="Buscar mensagens..." aria-label="Buscar mensagens">
+                    <button class="clear-search" data-action="clearChatSearch" aria-label="Limpar busca">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be loaded here -->
+                </div>
+                
+                <div class="chat-input-container">
+                    <button class="emoji-picker-btn" id="emojiPickerBtn" title="Inserir emoji">
+                        <i class="far fa-smile"></i>
+                    </button>
+                    <input type="text" id="chatInput" 
+                           placeholder="Digite sua mensagem... (*negrito* _itálico_ @mencionar)" 
+                           aria-label="Campo de mensagem do chat"
+                           autocomplete="off">
+                    <button class="btn-send ripple" data-action="sendMessage" aria-label="Enviar mensagem">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <div class="emoji-picker" id="emojiPicker">
+                        <div class="emoji-picker-header">
+                            <span>Emojis</span>
+                            <button class="emoji-picker-close" onclick="Chat.toggleEmojiPicker()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="emoji-picker-grid">
+                            <span class="emoji-item" data-emoji="😊">😊</span>
+                            <span class="emoji-item" data-emoji="😂">😂</span>
+                            <span class="emoji-item" data-emoji="😍">😍</span>
+                            <span class="emoji-item" data-emoji="🤔">🤔</span>
+                            <span class="emoji-item" data-emoji="😎">😎</span>
+                            <span class="emoji-item" data-emoji="😢">😢</span>
+                            <span class="emoji-item" data-emoji="😮">😮</span>
+                            <span class="emoji-item" data-emoji="🤣">🤣</span>
+                            <span class="emoji-item" data-emoji="👍">👍</span>
+                            <span class="emoji-item" data-emoji="👎">👎</span>
+                            <span class="emoji-item" data-emoji="❤️">❤️</span>
+                            <span class="emoji-item" data-emoji="🔥">🔥</span>
+                            <span class="emoji-item" data-emoji="✨">✨</span>
+                            <span class="emoji-item" data-emoji="🎉">🎉</span>
+                            <span class="emoji-item" data-emoji="👀">👀</span>
+                            <span class="emoji-item" data-emoji="💪">💪</span>
+                            <span class="emoji-item" data-emoji="☕">☕</span>
+                            <span class="emoji-item" data-emoji="🍕">🍕</span>
+                            <span class="emoji-item" data-emoji="🎯">🎯</span>
+                            <span class="emoji-item" data-emoji="💡">💡</span>
+                            <span class="emoji-item" data-emoji="📌">📌</span>
+                            <span class="emoji-item" data-emoji="✅">✅</span>
+                            <span class="emoji-item" data-emoji="❌">❌</span>
+                            <span class="emoji-item" data-emoji="⚠️">⚠️</span>
+                            <span class="emoji-item" data-emoji="🙏">🙏</span>
+                            <span class="emoji-item" data-emoji="👋">👋</span>
+                            <span class="emoji-item" data-emoji="🤝">🤝</span>
+                            <span class="emoji-item" data-emoji="💯">💯</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-users glass-card" id="chatUsersPanel">
+                <h4 onclick="Chat.toggleMembersPanel()">
+                    <i class="fas fa-users"></i> 
+                    Membros
+                    <span class="online-count" id="onlineCount">0</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h4>
+                <div class="online-users" id="onlineUsers">
+                    <!-- User cards will be loaded here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Page -->
+        <section class="page" id="stats">
+            <div class="page-header">
+                <h1>📊 Estatísticas</h1>
+                <p class="subtitle">Números que importam (e alguns que não)</p>
+            </div>
+            
+            <!-- Summary Cards -->
+            <div class="stats-summary">
+                <div class="summary-card glass-card">
+                    <div class="summary-icon">☕</div>
+                    <span class="summary-value" id="statsTotalCoffees">0</span>
+                    <span class="summary-label">Cafés Feitos</span>
+                </div>
+                <div class="summary-card glass-card">
+                    <div class="summary-icon">🛒</div>
+                    <span class="summary-value" id="statsTotalBrought">0</span>
+                    <span class="summary-label">Cafés Trazidos</span>
+                </div>
+                <div class="summary-card glass-card">
+                    <div class="summary-icon">📅</div>
+                    <span class="summary-value" id="statsWeekCoffees">0</span>
+                    <span class="summary-label">Esta Semana</span>
+                    <div class="summary-change" id="statsWeekChange"></div>
+                </div>
+                <div class="summary-card glass-card">
+                    <div class="summary-icon">⭐</div>
+                    <span class="summary-value" id="statsAvgRating">0.0</span>
+                    <span class="summary-label">Média de Avaliação</span>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <!-- Weekly Chart -->
+                <div class="chart-card glass-card">
+                    <h3><i class="fas fa-chart-bar"></i> Cafés por Dia</h3>
+                    <div class="chart-container" id="weeklyChartContainer">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </div>
+                
+                <!-- Top Makers -->
+                <div class="chart-card glass-card">
+                    <h3><i class="fas fa-trophy"></i> Top Baristas</h3>
+                    <div id="topMakersContainer">
+                        <!-- Leaderboard will be rendered here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Timeline -->
+            <div class="chart-card glass-card">
+                <h3><i class="fas fa-history"></i> Atividade Recente</h3>
+                <div class="activity-timeline" id="statsActivityTimeline">
+                    <!-- Timeline will be rendered here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Achievements Page -->
+        <section class="page" id="achievements">
+            <div class="page-header">
+                <h1>🏆 Conquistas</h1>
+                <p class="subtitle">Desbloqueie todas as medalhas! (<span id="achievementsSummary">0/0</span>)</p>
+            </div>
+            
+            <div class="achievements-section glass-card">
+                <div id="achievementsGrid">
+                    <!-- Achievements will be rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Levels Page -->
+        <section class="page" id="levels">
+            <div class="page-header">
+                <h1>📊 Sistema de Níveis</h1>
+                <p class="subtitle">Suba de nível realizando ações no sistema!</p>
+            </div>
+            
+            <div id="levelPageContent">
+                <!-- Level content will be rendered here -->
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Carregando dados de nível...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Page (Only for Admin) -->
+        <section class="page admin-page" id="admin">
+            <div class="admin-header">
+                <h1><i class="fas fa-user-shield"></i> Painel de Administração</h1>
+                <p>Controle total do sistema</p>
+            </div>
+
+            <!-- Admin Stats Dashboard -->
+            <div class="admin-dashboard">
+                <div class="admin-stat-card glass-card coffee">
+                    <div class="admin-stat-icon coffee"><i class="fas fa-coffee"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-value" id="adminTotalCoffees">0</span>
+                        <span class="admin-stat-label">Cafés</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card glass-card messages">
+                    <div class="admin-stat-icon messages"><i class="fas fa-comments"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-value" id="adminTotalMessages">0</span>
+                        <span class="admin-stat-label">Mensagens</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card glass-card users">
+                    <div class="admin-stat-icon users"><i class="fas fa-users"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-value" id="adminTotalUsers">0</span>
+                        <span class="admin-stat-label">Usuários</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card glass-card ratings">
+                    <div class="admin-stat-icon ratings"><i class="fas fa-star"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-value" id="adminTotalRatings">0</span>
+                        <span class="admin-stat-label">Avaliações</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid de Ações Rápidas e Zona de Perigo lado a lado -->
+            <div class="admin-main-grid">
+                <!-- Admin Quick Actions -->
+                <div class="admin-quick-actions glass-card">
+                    <h3><i class="fas fa-bolt"></i> Ações Rápidas</h3>
+                    <div class="admin-actions-grid">
+                        <button type="button" class="admin-action-btn" onclick="window.recalcularConquistas()">
+                            <i class="fas fa-trophy"></i>
+                            <span>Conquistas</span>
+                        </button>
+                        <button type="button" class="admin-action-btn" onclick="window.recalcularNiveis()">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Níveis</span>
+                        </button>
+                        <button type="button" class="admin-action-btn highlight" onclick="window.adminSwitchToUser()">
+                            <i class="fas fa-user-friends"></i>
+                            <span>Trocar Conta</span>
+                        </button>
+                        <button type="button" class="admin-action-btn" onclick="window.adminExportData()">
+                            <i class="fas fa-download"></i>
+                            <span>Exportar</span>
+                        </button>
+                        <button type="button" class="admin-action-btn danger" onclick="window.adminClearCache()">
+                            <i class="fas fa-broom"></i>
+                            <span>Cache</span>
+                        </button>
+                        <button type="button" class="admin-action-btn warning" onclick="window.adminRefreshAll()">
+                            <i class="fas fa-sync"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Admin Danger Zone - Movida para dentro do grid -->
+                <div class="admin-danger-zone glass-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h3>
+                    <p>Ações destrutivas - use com cuidado!</p>
+                    <div class="danger-actions">
+                        <button type="button" class="btn-danger-outline" onclick="window.adminClearAll('coffee-made')">
+                            <i class="fas fa-trash"></i> Cafés Feitos
+                        </button>
+                        <button type="button" class="btn-danger-outline" onclick="window.adminClearAll('coffee-brought')">
+                            <i class="fas fa-trash"></i> Cafés Trazidos
+                        </button>
+                        <button type="button" class="btn-danger-outline" onclick="window.adminClearAll('chat-messages')">
+                            <i class="fas fa-trash"></i> Chat
+                        </button>
+                        <button type="button" class="btn-danger-outline" onclick="window.adminClearAll('ratings')">
+                            <i class="fas fa-trash"></i> Avaliações
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🆕 Gerenciamento de Comunicados e Sugestões -->
+            <div class="admin-communications glass-card" id="adminCommunications">
+                <div class="admin-communications-header" onclick="window.toggleAdminSection(this)">
+                    <div class="admin-communications-header-left">
+                        <h3><i class="fas fa-bullhorn"></i> Comunicados & Sugestões</h3>
+                        <p>Gerencie comunicados e veja sugestões dos usuários</p>
+                    </div>
+                    <i class="fas fa-chevron-down collapse-toggle"></i>
+                </div>
+                
+                <div class="communications-content">
+                    <!-- Tabs para alternar entre comunicados e sugestões -->
+                    <div class="communications-tabs">
+                        <button type="button" class="comms-tab active" data-tab="announcements" onclick="window.switchCommsTab('announcements')">
+                            <i class="fas fa-bullhorn"></i> Comunicados
+                            <span class="comms-tab-badge" id="announcementsTabBadge">0</span>
+                        </button>
+                        <button type="button" class="comms-tab" data-tab="suggestions" onclick="window.switchCommsTab('suggestions')">
+                            <i class="fas fa-lightbulb"></i> Sugestões
+                            <span class="comms-tab-badge pending" id="suggestionsTabBadge">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Painel de Comunicados -->
+                    <div class="comms-panel active" id="announcementsPanel">
+                        <div class="comms-actions">
+                            <button type="button" class="btn-primary" onclick="window.openAnnouncementModal()">
+                                <i class="fas fa-plus"></i> Novo Comunicado
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="window.refreshAnnouncements()">
+                                <i class="fas fa-sync"></i> Atualizar
+                            </button>
+                        </div>
+                        <div class="admin-announcements-list" id="adminAnnouncementsList">
+                            <div class="loading-placeholder">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Carregando comunicados...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Painel de Sugestões -->
+                    <div class="comms-panel" id="suggestionsPanel">
+                        <div class="comms-actions">
+                            <div class="suggestions-filter">
+                                <label>Filtrar por:</label>
+                                <select id="suggestionsFilter" onchange="window.filterSuggestions()">
+                                    <option value="">Todas</option>
+                                    <option value="PENDING">Pendentes</option>
+                                    <option value="REVIEWING">Em Análise</option>
+                                    <option value="APPROVED">Aprovadas</option>
+                                    <option value="REJECTED">Rejeitadas</option>
+                                    <option value="IMPLEMENTED">Implementadas</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="window.refreshSuggestions()">
+                                <i class="fas fa-sync"></i> Atualizar
+                            </button>
+                        </div>
+                        <div class="suggestions-stats" id="suggestionsStats">
+                            <!-- Stats serão inseridas via JS -->
+                        </div>
+                        <div class="admin-suggestions-list" id="adminSuggestionsList">
+                            <div class="loading-placeholder">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Carregando sugestões...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XP Configuration Section -->
+            <div class="admin-xp-config glass-card" id="adminXPConfig">
+                <div class="admin-xp-header" onclick="window.toggleAdminSection(this)">
+                    <div class="admin-xp-header-left">
+                        <h3><i class="fas fa-star"></i> Configuração de XP</h3>
+                        <p>Ajuste os valores de XP para cada ação do sistema</p>
+                    </div>
+                    <i class="fas fa-chevron-down collapse-toggle"></i>
+                </div>
+                
+                <div class="xp-config-content">
+                    <!-- Tabs para categorias -->
+                    <div class="xp-config-tabs">
+                        <button type="button" class="xp-config-tab active" data-category="coffee" onclick="window.switchXPConfigTab('coffee')">
+                            <i class="fas fa-coffee"></i> Café
+                        </button>
+                        <button type="button" class="xp-config-tab" data-category="items" onclick="window.switchXPConfigTab('items')">
+                            <i class="fas fa-cookie"></i> Itens
+                        </button>
+                        <button type="button" class="xp-config-tab" data-category="chat" onclick="window.switchXPConfigTab('chat')">
+                            <i class="fas fa-comments"></i> Chat
+                        </button>
+                        <button type="button" class="xp-config-tab" data-category="ratings" onclick="window.switchXPConfigTab('ratings')">
+                            <i class="fas fa-star"></i> Avaliações
+                        </button>
+                        <button type="button" class="xp-config-tab" data-category="achievements" onclick="window.switchXPConfigTab('achievements')">
+                            <i class="fas fa-trophy"></i> Conquistas
+                        </button>
+                        <button type="button" class="xp-config-tab" data-category="special" onclick="window.switchXPConfigTab('special')">
+                            <i class="fas fa-magic"></i> Especiais
+                        </button>
+                    </div>
+                    
+                    <!-- Café -->
+                    <div class="xp-config-categories active" id="xpCategory-coffee">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-coffee"></i> Ações de Café</h4>
+                            <div class="xp-config-items" id="xpConfigCoffee">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Itens Especiais -->
+                    <div class="xp-config-categories" id="xpCategory-items">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-cookie"></i> Itens Especiais</h4>
+                            <div class="xp-config-items" id="xpConfigItems">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat -->
+                    <div class="xp-config-categories" id="xpCategory-chat">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-comments"></i> Ações de Chat</h4>
+                            <div class="xp-config-items" id="xpConfigChat">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Avaliações -->
+                    <div class="xp-config-categories" id="xpCategory-ratings">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-star"></i> Avaliações</h4>
+                            <div class="xp-config-items" id="xpConfigRatings">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conquistas -->
+                    <div class="xp-config-categories" id="xpCategory-achievements">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-trophy"></i> Conquistas</h4>
+                            <div class="xp-config-items" id="xpConfigAchievements">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Especiais -->
+                    <div class="xp-config-categories" id="xpCategory-special">
+                        <div class="xp-config-category">
+                            <h4><i class="fas fa-magic"></i> Ações Especiais</h4>
+                            <div class="xp-config-items" id="xpConfigSpecial">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="xp-config-actions">
+                        <button type="button" class="btn-xp-save" onclick="window.adminSaveXPConfig()">
+                            <i class="fas fa-save"></i> Salvar Configurações
+                        </button>
+                        <button type="button" class="btn-xp-reset" onclick="window.adminResetXPConfig()">
+                            <i class="fas fa-undo"></i> Restaurar Padrão
+                        </button>
+                    </div>
+                    
+                    <!-- Gerenciamento de XP por Usuário -->
+                    <div class="xp-user-management">
+                        <h4><i class="fas fa-user-edit"></i> Ajustar XP de Usuário</h4>
+                        <p class="xp-user-desc">Adicione ou remova XP manualmente de um usuário específico</p>
+                        
+                        <div class="xp-user-form">
+                            <div class="xp-user-select-wrapper">
+                                <label>Selecionar Usuário:</label>
+                                <select id="xpUserSelect" class="xp-user-select">
+                                    <option value="">-- Selecione --</option>
+                                </select>
+                            </div>
+                            
+                            <div class="xp-user-current" id="xpUserCurrent">
+                                <!-- Informações do usuário selecionado -->
+                            </div>
+                            
+                            <div class="xp-user-adjust">
+                                <label>Ajustar XP:</label>
+                                <div class="xp-adjust-controls">
+                                    <button type="button" class="btn-xp-adjust subtract" onclick="window.adminManualXP(-100)">-100</button>
+                                    <button type="button" class="btn-xp-adjust subtract" onclick="window.adminManualXP(-50)">-50</button>
+                                    <button type="button" class="btn-xp-adjust subtract" onclick="window.adminManualXP(-10)">-10</button>
+                                    <input type="number" id="xpManualAmount" class="xp-manual-input" value="50" min="1" max="10000">
+                                    <button type="button" class="btn-xp-adjust add" onclick="window.adminManualXP(10)">+10</button>
+                                    <button type="button" class="btn-xp-adjust add" onclick="window.adminManualXP(50)">+50</button>
+                                    <button type="button" class="btn-xp-adjust add" onclick="window.adminManualXP(100)">+100</button>
+                                </div>
+                                <button type="button" class="btn-xp-apply" onclick="window.adminApplyManualXP()">
+                                    <i class="fas fa-check"></i> Aplicar XP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Data Management Section -->
+            <div class="admin-data-section glass-card">
+                <h3><i class="fas fa-database"></i> Gerenciamento de Dados</h3>
+                
+                <div class="admin-tabs">
+                    <button type="button" class="admin-tab active" data-tab="coffee-made" onclick="window.adminChangeTab('coffee-made')">
+                        <i class="fas fa-coffee"></i> Cafés Feitos
+                    </button>
+                    <button type="button" class="admin-tab" data-tab="coffee-brought" onclick="window.adminChangeTab('coffee-brought')">
+                        <i class="fas fa-shopping-bag"></i> Trazidos
+                    </button>
+                    <button type="button" class="admin-tab" data-tab="coffee-history" onclick="window.adminChangeTab('coffee-history')">
+                        <i class="fas fa-history"></i> Histórico
+                    </button>
+                    <button type="button" class="admin-tab" data-tab="chat-messages" onclick="window.adminChangeTab('chat-messages')">
+                        <i class="fas fa-comments"></i> Chat
+                    </button>
+                    <button type="button" class="admin-tab" data-tab="ratings" onclick="window.adminChangeTab('ratings')">
+                        <i class="fas fa-star"></i> Avaliações
+                    </button>
+                    <button type="button" class="admin-tab" data-tab="xp-audit" onclick="window.adminChangeTab('xp-audit')">
+                        <i class="fas fa-chart-line"></i> Auditoria XP
+                    </button>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="admin-filters">
+                    <div class="admin-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Buscar nos registros..." onkeyup="window.adminSearch(this.value)">
+                    </div>
+                    <div class="admin-filter-actions">
+                        <button type="button" class="btn-filter" onclick="window.adminSelectAll()">
+                            <i class="fas fa-check-square"></i> Todos
+                        </button>
+                        <button type="button" class="btn-filter" onclick="window.adminDeselectAll()">
+                            <i class="fas fa-square"></i> Desmarcar
+                        </button>
+                        <button type="button" class="btn-filter danger" onclick="window.adminDeleteSelected()">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="adminDataTable">
+                    <!-- Data table will be rendered here -->
+                </div>
+            </div>
+
+            <!-- System Logs -->
+            <div class="admin-logs glass-card" id="adminLogs">
+                <h3 onclick="window.toggleAdminLogs(this)">
+                    <span><i class="fas fa-terminal"></i> Log de Atividades</span>
+                    <i class="fas fa-chevron-down collapse-toggle"></i>
+                </h3>
+                <div class="logs-container" id="adminLogsContainer">
+                    <div class="log-entry"><span class="log-time">--:--</span> Sistema inicializado</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Page -->
+        <section class="page" id="team">
+            <div class="page-header">
+                <h1>👥 Equipe Cérebro</h1>
+                <p class="subtitle">Os neurônios mais importantes da gráfica</p>
+            </div>
+            
+            <!-- Setor: Desenvolvimento de Protótipos e Fechamento de Arquivos -->
+            <div class="team-section">
+                <h3 class="team-section-title"><i class="fas fa-drafting-compass"></i> Desenvolvimento de Protótipos e Fechamento de Arquivos</h3>
+                <div class="team-grid">
+                    <div class="team-card glass-card">
+                        <div class="team-avatar has-photo">
+                            <img src="membros/Atila.jpeg" alt="Átila" loading="lazy">
+                        </div>
+                        <h4>Átila</h4>
+                        <p>Desenvolvimento de protótipos</p>
+                        <span class="team-status online">Criando...</span>
+                    </div>
+                    
+                    <div class="team-card glass-card">
+                        <div class="team-avatar has-photo">
+                            <img src="membros/chris.jpeg" alt="Chris" loading="lazy">
+                        </div>
+                        <h4>Chris</h4>
+                        <p>Fechamento de arquivos</p>
+                        <span class="team-status online">Finalizando...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Setor: PCP -->
+            <div class="team-section">
+                <h3 class="team-section-title"><i class="fas fa-tasks"></i> PCP - Planejamento e Controle</h3>
+                <div class="team-grid">
+                    <div class="team-card glass-card">
+                        <div class="team-avatar has-photo">
+                            <img src="membros/renan.jpeg" alt="Renan" loading="lazy">
+                        </div>
+                        <h4>Renan</h4>
+                        <p>Planejamento e controle</p>
+                        <span class="team-status online">Planejando...</span>
+                    </div>
+                    
+                    <div class="team-card glass-card">
+                        <div class="team-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Wilmar</h4>
+                        <p>Planejamento e controle</p>
+                        <span class="team-status online">Planejando...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Setor: Qualidade -->
+            <div class="team-section">
+                <h3 class="team-section-title"><i class="fas fa-check-circle"></i> Qualidade</h3>
+                <div class="team-grid">
+                    <div class="team-card glass-card">
+                        <div class="team-avatar has-photo">
+                            <img src="membros/pedrao.jpeg" alt="Pedro" loading="lazy">
+                        </div>
+                        <h4>Pedro</h4>
+                        <p>Controle de qualidade</p>
+                        <span class="team-status online">Verificando...</span>
+                    </div>
+                    
+                    <div class="team-card glass-card">
+                        <div class="team-avatar has-photo">
+                            <img src="membros/marcus.jpeg" alt="Marcus" loading="lazy">
+                        </div>
+                        <h4>Marcus</h4>
+                        <p>Controle de qualidade</p>
+                        <span class="team-status online">Inspecionando...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-motto glass-card">
+                <h3>🎯 Nosso Lema</h3>
+                <p>"Se funciona, não mexe. Se não funciona... toma um café primeiro."</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Coffee Modal -->
+    <div class="modal" id="coffeeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Registrar Café</h3>
+                <button class="modal-close" data-action="closeCoffeeModal" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="personName">Seu nome:</label>
+                    <input type="text" id="personName" placeholder="Digite seu nome" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="coffeeNote">Observação (opcional):</label>
+                    <input type="text" id="coffeeNote" placeholder="Ex: Café forte!">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary ripple" data-action="closeCoffeeModal">Cancelar</button>
+                <button class="btn-primary ripple" data-action="registerCoffee">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Username Modal -->
+    <div class="modal" id="usernameModal" role="dialog" aria-modal="true" aria-labelledby="usernameModalTitle">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="usernameModalTitle">🧠 Identifique-se, Neurônio!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="username">Como você quer ser chamado?</label>
+                    <input type="text" id="username" placeholder="Seu nome ou apelido" autocomplete="nickname">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary ripple" data-action="setUsername">Entrar no Cérebro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="modal" id="ratingModal" role="dialog" aria-modal="true" aria-labelledby="ratingModalTitle">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="ratingModalTitle">⭐ Avaliar Café</h3>
+                <button class="modal-close" data-action="closeRatingModal" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="margin-bottom: 10px; color: var(--text-secondary);">Café feito por:</p>
+                <p id="ratingMakerName" style="font-size: 1.3rem; font-weight: 600; color: var(--primary-coffee); margin-bottom: 20px;"></p>
+                
+                <p style="margin-bottom: 15px; color: var(--text-secondary);">Qual a sua nota?</p>
+                <div class="rating-stars" role="radiogroup" aria-label="Avaliação de 1 a 5 estrelas">
+                    <span class="star" data-action="setModalRating" data-value="1" role="radio" aria-checked="false" aria-label="1 estrela" tabindex="0">⭐</span>
+                    <span class="star" data-action="setModalRating" data-value="2" role="radio" aria-checked="false" aria-label="2 estrelas" tabindex="0">⭐</span>
+                    <span class="star" data-action="setModalRating" data-value="3" role="radio" aria-checked="false" aria-label="3 estrelas" tabindex="0">⭐</span>
+                    <span class="star" data-action="setModalRating" data-value="4" role="radio" aria-checked="false" aria-label="4 estrelas" tabindex="0">⭐</span>
+                    <span class="star" data-action="setModalRating" data-value="5" role="radio" aria-checked="false" aria-label="5 estrelas" tabindex="0">⭐</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary ripple" data-action="closeRatingModal">Cancelar</button>
+                <button class="btn-primary ripple" data-action="submitRating">Avaliar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Manual Modal -->
+    <div class="modal pdf-modal" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+        <div class="pdf-modal-content glass-card">
+            <div class="pdf-modal-header">
+                <div class="pdf-modal-title-area">
+                    <div class="pdf-title-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    <div>
+                        <h3 id="pdfModalTitle">📜 Manual Sagrado do Café</h3>
+                        <p class="pdf-subtitle">POP CAFE 0001 - Preparo de Café no Coador</p>
+                    </div>
+                </div>
+                <button class="modal-close pdf-close" data-action="closePdfModal" aria-label="Fechar manual">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="pdf-modal-body">
+                <div class="pdf-loading" id="pdfLoading">
+                    <div class="pdf-loading-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <p>Preparando o manual...</p>
+                </div>
+                <iframe 
+                    id="pdfViewer"
+                    src="" 
+                    title="Manual do Café - POP"
+                    loading="lazy">
+                </iframe>
+            </div>
+            <div class="pdf-modal-footer">
+                <div class="pdf-footer-info">
+                    <span><i class="fas fa-info-circle"></i> Documento oficial do setor Cérebro</span>
+                </div>
+                <div class="pdf-footer-actions">
+                    <a href="assets/documents/CAFE 0001 PREPARO DE CAFÉ NO COADOR.pdf" download class="btn-secondary ripple">
+                        <i class="fas fa-download"></i> Baixar PDF
+                    </a>
+                    <button class="btn-primary ripple" data-action="closePdfModal">
+                        <i class="fas fa-check"></i> Entendi!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Special Item Modal -->
+    <div class="modal" id="specialItemModal" role="dialog" aria-modal="true" aria-labelledby="specialItemModalTitle">
+        <div class="modal-content glass-card special-item-modal">
+            <div class="modal-header">
+                <h3 id="specialItemModalTitle">🍰 O que você trouxe?</h3>
+                <button class="modal-close" data-action="closeSpecialItemModal" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="special-item-subtitle">Selecione o item que você trouxe para a equipe</p>
+                
+                <div class="special-items-grid" id="specialItemsGrid">
+                    <!-- Itens serão carregados dinamicamente -->
+                </div>
+                
+                <div class="special-item-selected" id="specialItemSelected" style="display: none;">
+                    <div class="selected-item-info">
+                        <div class="selected-icon" id="selectedItemIcon">🎂</div>
+                        <div>
+                            <span class="selected-name" id="selectedItemName">Bolo</span>
+                            <span class="selected-xp" id="selectedItemXP">+250 XP</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="special-item-note">
+                    <label for="specialItemNote">Observação (opcional):</label>
+                    <input type="text" id="specialItemNote" placeholder="Ex: Bolo de chocolate caseiro..." maxlength="200">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary ripple" data-action="closeSpecialItemModal">Cancelar</button>
+                <button class="btn-primary ripple" id="registerSpecialItemBtn" data-action="registerSpecialItem" disabled>
+                    <i class="fas fa-check"></i> Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preferences Modal -->
+    <div class="modal" id="preferencesModal" role="dialog" aria-modal="true" aria-labelledby="preferencesModalTitle">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="preferencesModalTitle">☕ Minhas Preferências de Café</h3>
+                <button class="modal-close" data-action="closePreferencesModal" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="preference-group">
+                    <label>Intensidade do Café:</label>
+                    <div class="preference-options">
+                        <label class="preference-option">
+                            <input type="radio" name="coffeeStrength" value="light">
+                            <span>☕ Fraco</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="coffeeStrength" value="medium" checked>
+                            <span>☕☕ Médio</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="coffeeStrength" value="strong">
+                            <span>☕☕☕ Forte</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <label>Açúcar:</label>
+                    <div class="preference-options">
+                        <label class="preference-option">
+                            <input type="radio" name="sugar" value="none" checked>
+                            <span>Sem açúcar</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="sugar" value="little">
+                            <span>Pouco</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="sugar" value="medium">
+                            <span>Normal</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="sugar" value="lots">
+                            <span>Muito</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <label>Leite:</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="prefMilk">
+                        <span>Com leite</span>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <label>Temperatura:</label>
+                    <div class="preference-options">
+                        <label class="preference-option">
+                            <input type="radio" name="temperature" value="hot" checked>
+                            <span>🔥 Quente</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="temperature" value="warm">
+                            <span>☀️ Morno</span>
+                        </label>
+                        <label class="preference-option">
+                            <input type="radio" name="temperature" value="cold">
+                            <span>❄️ Gelado</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <label for="prefNotes">Observações:</label>
+                    <input type="text" id="prefNotes" placeholder="Ex: Sem espuma, caneca grande...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary ripple" data-action="closePreferencesModal">Cancelar</button>
+                <button class="btn-primary ripple" data-action="savePreferences">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shortcuts Help Modal -->
+    <div class="modal" id="shortcutsModal" role="dialog" aria-modal="true" aria-labelledby="shortcutsModalTitle">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="shortcutsModalTitle">⌨️ Atalhos de Teclado</h3>
+                <button class="modal-close" data-action="closeShortcutsModal" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="shortcutsList">
+                <!-- Shortcuts list will be rendered here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary ripple" data-action="closeShortcutsModal">Entendi!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🆕 Modal para Criar/Editar Comunicado -->
+    <div class="modal" id="announcementModal" role="dialog" aria-modal="true" aria-labelledby="announcementModalTitle">
+        <div class="modal-content glass-card announcement-modal-content">
+            <div class="modal-header">
+                <h3 id="announcementModalTitle"><i class="fas fa-bullhorn"></i> Novo Comunicado</h3>
+                <button class="modal-close" onclick="window.closeAnnouncementModal()" aria-label="Fechar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="announcementId">
+                <div class="form-group">
+                    <label for="announcementTitle"><i class="fas fa-heading"></i> Título</label>
+                    <input type="text" id="announcementTitleInput" class="form-input" placeholder="Título do comunicado..." maxlength="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="announcementContent"><i class="fas fa-align-left"></i> Conteúdo</label>
+                    <textarea id="announcementContentInput" class="form-textarea" placeholder="Escreva o conteúdo do comunicado..." rows="5" maxlength="2000" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="announcementPriority"><i class="fas fa-flag"></i> Prioridade</label>
+                        <select id="announcementPriority" class="form-select">
+                            <option value="LOW">Baixa</option>
+                            <option value="NORMAL" selected>Normal</option>
+                            <option value="HIGH">Alta</option>
+                            <option value="URGENT">Urgente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementExpires"><i class="fas fa-calendar"></i> Expira em (opcional)</label>
+                        <input type="date" id="announcementExpires" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="announcementActive" checked>
+                        <span>Comunicado ativo</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="window.closeAnnouncementModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="window.saveAnnouncement()">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div><!-- End of mainApp -->
+
+    <!-- Socket.io Client -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- JavaScript Modules -->
+    <script type="module" src="js/main.js?v=3.0"></script>
+    
+    <!-- Achievement Recalculation Helper -->
+    <script type="module">
+        // Função global para recalcular conquistas via console
+        window.forceRecalculateAchievements = async function() {
+            try {
+                console.log('🔄 Iniciando recalculo forçado...');
+                
+                // Limpar flag
+                localStorage.removeItem('cerebroAchievementsRecalculated');
+                
+                // Importar módulos
+                const { State } = await import('./js/state.js?v=3.0');
+                const { Achievements } = await import('./js/achievements/index.js?v=3.0');
+                
+                // Inicializar se necessário
+                if (!State.data) {
+                    await State.init();
+                }
+                
+                // Executar recalculo
+                const result = await Achievements.recalculateAllAchievements(false);
+                
+                // Salvar flag
+                localStorage.setItem('cerebroAchievementsRecalculated', 'v2_' + Date.now());
+                
+                // Atualizar display
+                Achievements.updateDisplay();
+                
+                console.log('✅ Recalculo concluído!', result);
+                alert(`✅ Conquistas recalculadas!\n\nUsuários: ${result.users.length}\nConquistas: ${result.totalUnlocked}\n\nRecarregue a página (F5) para ver todas as mudanças.`);
+                
+                return result;
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                alert('❌ Erro ao recalcular: ' + error.message);
+                throw error;
+            }
+        };
+        
+        console.log('💡 Para recalcular conquistas manualmente, execute: forceRecalculateAchievements()');
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // ╔══════════════════════════════════════════════════════════════════════════════╗
+        // ║                    🧠 CÉREBRO - PWA Service Worker                           ║
+        // ╚══════════════════════════════════════════════════════════════════════════════╝
+        
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('🎉 PWA: Service Worker registrado com sucesso!', registration.scope);
+                        
+                        // Verificar atualizações
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            console.log('🔄 PWA: Nova versão detectada!');
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Nova versão disponível
+                                    console.log('✨ PWA: Nova versão pronta! Recarregue a página.');
+                                    
+                                    // Opcional: Mostrar notificação ao usuário
+                                    if (confirm('🆕 Nova versão do Cérebro disponível! Deseja atualizar agora?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('❌ PWA: Erro ao registrar Service Worker:', error);
+                    });
+            });
+            
+            // Detectar quando o app está sendo controlado pelo Service Worker
+            navigator.serviceWorker.ready.then(registration => {
+                console.log('✅ PWA: App pronto para uso offline!');
+            });
+        } else {
+            console.warn('⚠️  PWA: Service Workers não suportados neste navegador.');
+        }
+
+        // Prompt de instalação do PWA
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevenir o prompt automático
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            console.log('📲 PWA: App pode ser instalado!');
+            
+            // Opcional: Mostrar botão de instalação customizado
+            // showInstallButton();
+        });
+        
+        // Função para instalar o PWA (pode ser chamada por um botão)
+        window.installPWA = async function() {
+            if (!deferredPrompt) {
+                console.log('⚠️  PWA: Prompt de instalação não disponível.');
+                alert('Este app já está instalado ou não pode ser instalado neste dispositivo.');
+                return;
+            }
+            
+            // Mostrar prompt de instalação
+            deferredPrompt.prompt();
+            
+            // Aguardar escolha do usuário
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`📲 PWA: Usuário ${outcome === 'accepted' ? 'aceitou' : 'recusou'} a instalação.`);
+            
+            // Limpar o prompt
+            deferredPrompt = null;
+        };
+        
+        // Detectar quando o app foi instalado com sucesso
+        window.addEventListener('appinstalled', () => {
+            console.log('🎉 PWA: App instalado com sucesso!');
+            deferredPrompt = null;
+        });
+        
+        // Log de status PWA
+        console.log('%c🧠 CÉREBRO PWA', 'color: #6366F1; font-size: 16px; font-weight: bold;');
+        console.log('%cEste é um Progressive Web App!', 'color: #10b981;');
+        console.log('%c• Funciona offline', 'color: #6b7280;');
+        console.log('%c• Pode ser instalado no PC e celular', 'color: #6b7280;');
+        console.log('%c• Abre em tela cheia', 'color: #6b7280;');
+        console.log('%c\nPara instalar: Procure o ícone de + na barra de endereço', 'color: #3b82f6; font-weight: bold;');
+        console.log('%cOu execute: installPWA()', 'color: #8b5cf6; font-style: italic;');
+    </script>
+</body>
+</html>

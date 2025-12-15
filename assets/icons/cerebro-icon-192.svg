@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
+  <defs>
+    <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6"/>
+      <stop offset="50%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="neuralGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fundo circular -->
+  <circle cx="96" cy="96" r="90" fill="#1E1B4B"/>
+  <circle cx="96" cy="96" r="85" fill="#312E81" opacity="0.5"/>
+  
+  <!-- Cérebro - Hemisfério Esquerdo -->
+  <path d="M96 45
+           C75 45 60 60 56 75
+           C52 90 54 105 60 116
+           C66 127 75 135 82 139
+           C90 143 94 144 96 146
+           L96 45" 
+        fill="url(#brainGrad)"/>
+  
+  <!-- Cérebro - Hemisfério Direito -->
+  <path d="M96 45
+           C117 45 132 60 136 75
+           C140 90 138 105 132 116
+           C126 127 117 135 110 139
+           C102 143 98 144 96 146
+           L96 45" 
+        fill="url(#brainGrad)"/>
+  
+  <!-- Sulcos cerebrais -->
+  <path d="M68 68 Q76 75 72 86" fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M64 94 Q72 102 70 113" fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M124 68 Q116 75 120 86" fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M128 94 Q120 102 122 113" fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Linha central -->
+  <line x1="96" y1="43" x2="96" y2="148" stroke="#312E81" stroke-width="2"/>
+  
+  <!-- Pontos neurais -->
+  <circle cx="68" cy="75" r="3" fill="url(#neuralGrad)"/>
+  <circle cx="124" cy="75" r="3" fill="url(#neuralGrad)"/>
+  <circle cx="75" cy="105" r="2" fill="url(#neuralGrad)"/>
+  <circle cx="117" cy="105" r="2" fill="url(#neuralGrad)"/>
+  
+  <!-- Ponto central -->
+  <circle cx="96" cy="98" r="4" fill="#06B6D4"/>
+</svg>

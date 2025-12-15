@@ -1,0 +1,42 @@
+{
+    "name": "Cérebro - O Setor Mais Inteligente",
+    "short_name": "Cérebro",
+    "description": "Sistema de gerenciamento interno com chat em tempo real, gamificação e controle de atividades",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1E1B4B",
+    "theme_color": "#6366F1",
+    "orientation": "any",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/assets/icons/cerebro-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/icons/cerebro-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/assets/icons/cerebro-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/icons/cerebro-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "categories": ["productivity", "utilities", "business"],
+    "lang": "pt-BR",
+    "dir": "ltr",
+    "scope": "/",
+    "prefer_related_applications": false
+}

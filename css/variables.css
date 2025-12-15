@@ -1,0 +1,76 @@
+/* ===== CSS VARIABLES ===== */
+:root {
+    /* Colors - Light Coffee Theme (Professional) */
+    --primary-coffee: #6F4E37;
+    --primary-coffee-dark: #5D4037;
+    --primary-coffee-light: #8D6E63;
+    --coffee-cream: #FFF8F0;
+    --coffee-latte: #D7CCC8;
+    --coffee-espresso: #3E2723;
+    --coffee-mocha: #795548;
+    --coffee-caramel: #A1887F;
+    --coffee-accent: #BCAAA4;
+    
+    /* Legacy names (for compatibility) */
+    --primary-green: var(--primary-coffee);
+    --primary-green-dark: var(--primary-coffee-dark);
+    --primary-green-light: var(--primary-coffee-light);
+    
+    /* Glass Effect - Premium Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-bg-solid: rgba(255, 255, 255, 0.85);
+    --glass-bg-hover: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-border-light: rgba(255, 255, 255, 0.6);
+    --glass-border-accent: rgba(111, 78, 55, 0.15);
+    --glass-shadow: rgba(111, 78, 55, 0.08);
+    --glass-inner-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    --glass-glow: 0 0 40px rgba(111, 78, 55, 0.1);
+    --glass-blur: 20px;
+    --glass-blur-heavy: 30px;
+    
+    /* Text Colors */
+    --text-primary: #3E2723;
+    --text-secondary: #6D4C41;
+    
+    /* Background - Enhanced with subtle pattern */
+    --bg-gradient: linear-gradient(135deg, #FAFAFA 0%, #F5F0EB 25%, #FFF8F0 50%, #F5F0EB 75%, #FAFAFA 100%);
+    --bg-mesh: radial-gradient(at 40% 20%, rgba(111, 78, 55, 0.03) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(215, 204, 200, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(111, 78, 55, 0.03) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, rgba(255, 248, 240, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(111, 78, 55, 0.05) 0px, transparent 50%);
+    
+    /* Sidebar */
+    --sidebar-width: 220px;
+    --sidebar-collapsed: 60px;
+    
+    /* Animations */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-full: 50%;
+    
+    /* Shadows - Premium Multi-layer */
+    --shadow-sm: 0 2px 8px var(--glass-shadow), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 32px rgba(111, 78, 55, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 50px rgba(111, 78, 55, 0.12), 0 10px 25px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 25px 60px rgba(111, 78, 55, 0.15), 0 15px 35px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 30px rgba(111, 78, 55, 0.15), 0 0 60px rgba(111, 78, 55, 0.08);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+}

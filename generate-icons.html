@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Ícones PNG - Cérebro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        h1 { color: #6366F1; }
+        canvas {
+            border: 2px solid #444;
+            margin: 10px;
+            background: #1a1a1a;
+        }
+        button {
+            background: #6366F1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #4F46E5;
+        }
+        .info {
+            background: #3a3a3a;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .success {
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Gerador de Ícones PNG para PWA</h1>
+        <div class="info">
+            <p>Este gerador cria ícones PNG a partir do SVG para garantir compatibilidade PWA total.</p>
+            <p>Clique nos botões abaixo para baixar cada tamanho:</p>
+        </div>
+        
+        <div>
+            <canvas id="canvas192" width="192" height="192"></canvas>
+            <button onclick="generateIcon(192)">Gerar 192x192</button>
+            <span id="status192"></span>
+        </div>
+        
+        <div>
+            <canvas id="canvas512" width="512" height="512"></canvas>
+            <button onclick="generateIcon(512)">Gerar 512x512</button>
+            <span id="status512"></span>
+        </div>
+
+        <div class="info" style="margin-top: 30px;">
+            <h3>📋 Instruções:</h3>
+            <ol>
+                <li>Clique em cada botão para gerar e baixar o ícone</li>
+                <li>Salve os arquivos na pasta <code>assets/icons/</code></li>
+                <li>Os ícones PNG serão usados automaticamente pelo PWA</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // SVG do ícone Cérebro
+        const svgContent = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="brainGradient512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6"/>
+      <stop offset="50%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="neuralGradient512" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    </linearGradient>
+    <filter id="shadow512" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#4F46E5" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <circle cx="256" cy="256" r="240" fill="#1E1B4B" filter="url(#shadow512)"/>
+  <circle cx="256" cy="256" r="230" fill="#312E81" opacity="0.5"/>
+  <circle cx="256" cy="256" r="220" fill="none" stroke="url(#neuralGradient512)" stroke-width="2" stroke-dasharray="15 10" opacity="0.6"/>
+  
+  <path d="M256 120 C200 120 160 160 150 200 C140 240 145 280 160 310 C175 340 200 360 220 370 C240 380 250 385 256 390 L256 120" fill="url(#brainGradient512)"/>
+  <path d="M256 120 C312 120 352 160 362 200 C372 240 367 280 352 310 C337 340 312 360 292 370 C272 380 262 385 256 390 L256 120" fill="url(#brainGradient512)"/>
+  
+  <path d="M180 180 Q200 200 190 230 Q180 260 200 280" fill="none" stroke="#C4B5FD" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <path d="M200 150 Q230 180 210 220" fill="none" stroke="#C4B5FD" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <path d="M170 250 Q190 270 185 300 Q180 330 210 350" fill="none" stroke="#C4B5FD" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  
+  <path d="M332 180 Q312 200 322 230 Q332 260 312 280" fill="none" stroke="#C4B5FD" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <path d="M312 150 Q282 180 302 220" fill="none" stroke="#C4B5FD" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <path d="M342 250 Q322 270 327 300 Q332 330 302 350" fill="none" stroke="#C4B5FD" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  
+  <line x1="256" y1="115" x2="256" y2="395" stroke="#312E81" stroke-width="3" opacity="0.8"/>
+  
+  <circle cx="180" cy="200" r="6" fill="url(#neuralGradient512)" opacity="0.9"/>
+  <circle cx="332" cy="200" r="6" fill="url(#neuralGradient512)" opacity="0.9"/>
+  <circle cx="200" cy="280" r="5" fill="url(#neuralGradient512)" opacity="0.8"/>
+  <circle cx="312" cy="280" r="5" fill="url(#neuralGradient512)" opacity="0.8"/>
+  <circle cx="220" cy="350" r="4" fill="url(#neuralGradient512)" opacity="0.7"/>
+  <circle cx="292" cy="350" r="4" fill="url(#neuralGradient512)" opacity="0.7"/>
+  
+  <path d="M180 200 Q220 240 200 280" stroke="url(#neuralGradient512)" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M332 200 Q292 240 312 280" stroke="url(#neuralGradient512)" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M200 280 Q256 320 312 280" stroke="url(#neuralGradient512)" stroke-width="2" fill="none" opacity="0.5"/>
+  
+  <circle cx="256" cy="260" r="8" fill="#06B6D4" opacity="0.9"/>
+</svg>`;
+
+        function generateIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            const statusEl = document.getElementById(`status${size}`);
+            
+            // Limpar canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Criar imagem do SVG
+            const img = new Image();
+            const svg = new Blob([svgContent], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(svg);
+            
+            img.onload = function() {
+                // Desenhar no canvas
+                ctx.drawImage(img, 0, 0, size, size);
+                
+                // Converter para PNG e baixar
+                canvas.toBlob(function(blob) {
+                    const link = document.createElement('a');
+                    link.download = `cerebro-icon-${size}.png`;
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                    
+                    statusEl.innerHTML = '<span class="success">✓ Baixado!</span>';
+                    setTimeout(() => statusEl.innerHTML = '', 3000);
+                }, 'image/png');
+                
+                URL.revokeObjectURL(url);
+            };
+            
+            img.src = url;
+        }
+        
+        // Gerar preview automaticamente
+        window.onload = function() {
+            [192, 512].forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                const svg = new Blob([svgContent], {type: 'image/svg+xml'});
+                const url = URL.createObjectURL(svg);
+                
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, size, size);
+                    URL.revokeObjectURL(url);
+                };
+                
+                img.src = url;
+            });
+        };
+    </script>
+</body>
+</html>

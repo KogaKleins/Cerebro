@@ -1,0 +1,67 @@
+# ============================================
+# 🧠 CÉREBRO - Configuração Prometheus
+# ============================================
+# Arquivo de configuração para coleta de métricas
+# do servidor Cérebro.
+#
+# Para usar com Docker:
+#   docker-compose -f docker-compose.observability.yml up -d
+# ============================================
+
+global:
+  # Intervalo padrão de scraping
+  scrape_interval: 15s
+  
+  # Timeout para scraping
+  scrape_timeout: 10s
+  
+  # Intervalo de avaliação de regras
+  evaluation_interval: 15s
+
+# ============================================
+# CONFIGURAÇÃO DE SCRAPE
+# ============================================
+scrape_configs:
+  # ----------------------------------------
+  # Métricas do Cérebro (Node.js/Express)
+  # ----------------------------------------
+  - job_name: 'cerebro'
+    static_configs:
+      # Para Docker no Windows/Mac, use host.docker.internal
+      # Para Linux, use o IP da máquina host
+      - targets: ['host.docker.internal:3000']
+        labels:
+          app: 'cerebro'
+          environment: 'development'
+    
+    metrics_path: '/metrics'
+    
+    # Relabeling para adicionar informações
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'cerebro-server'
+
+  # ----------------------------------------
+  # Métricas do próprio Prometheus
+  # ----------------------------------------
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          app: 'prometheus'
+
+# ============================================
+# REGRAS DE ALERTA (opcional)
+# ============================================
+# rule_files:
+#   - 'alerts/*.yml'
+
+# ============================================
+# ALERTMANAGER (opcional)
+# ============================================
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - 'alertmanager:9093'

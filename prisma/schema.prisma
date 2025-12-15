@@ -1,0 +1,254 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String        @id @default(uuid())
+  username      String        @unique
+  password      String
+  name          String
+  role          Role          @default(MEMBER)
+  avatar        String
+  setor         String
+  photo         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  // 🆕 Campos para sistema de ban
+  bannedUntil   DateTime?     // Até quando o usuário está banido
+  banReason     String?       // Motivo do ban
+  achievements  Achievement[]
+  coffeeMade    Coffee[]      @relation("CoffeeMaker")
+  chatMessages  Message[]
+  coffeeRatings Rating[]
+  levelData     UserLevel?
+  // 🆕 Relações para Comunicados e Sugestões
+  announcements   Announcement[]  @relation("AnnouncementAuthor")
+  suggestions     Suggestion[]    @relation("SuggestionAuthor")
+
+  @@map("users")
+}
+
+model Coffee {
+  id          String     @id @default(uuid())
+  type        CoffeeType
+  makerId     String
+  timestamp   DateTime   @default(now())
+  quantity    Int?
+  description String?
+  createdBy   String?
+  updatedBy   String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  maker       User       @relation("CoffeeMaker", fields: [makerId], references: [id], onDelete: Cascade)
+  ratings     Rating[]
+
+  @@index([makerId])
+  @@index([timestamp])
+  @@map("coffees")
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  coffeeId  String
+  userId    String
+  rating    Int
+  createdAt DateTime @default(now())
+  coffee    Coffee   @relation(fields: [coffeeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([coffeeId, userId])
+  @@index([coffeeId])
+  @@index([userId])
+  @@map("ratings")
+}
+
+model Message {
+  id          String    @id @default(uuid())
+  authorId    String
+  text        String
+  timestamp   DateTime  @default(now())
+  edited      Boolean   @default(false)
+  deletedAt   DateTime?
+  // 🆕 Campos para respostas (reply)
+  replyToId     String?   // ID da mensagem original (para scroll)
+  replyToAuthor String?   // Nome do autor da mensagem original
+  replyToText   String?   // Texto preview da mensagem original
+  
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  reactions MessageReaction[]
+
+  @@index([authorId])
+  @@index([timestamp])
+  @@index([replyToId])
+  @@map("messages")
+}
+
+// 🆕 Reações em mensagens - Persiste TODAS as reações para cálculo de XP
+model MessageReaction {
+  id        String   @id @default(uuid())
+  messageId String
+  userId    String   // Quem reagiu
+  emoji     String   // Qual emoji (❤️, 👍, etc)
+  createdAt DateTime @default(now())
+  
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  
+  // Um usuário só pode dar uma reação específica por mensagem
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("message_reactions")
+}
+
+// 🆕 Login diário - Rastreia logins para XP de streak
+model DailyLogin {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @db.Date // Apenas a data, sem hora
+  xpAwarded Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, date]) // Um login por usuário por dia
+  @@index([userId])
+  @@index([date])
+  @@map("daily_logins")
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  userId      String
+  type        String
+  title       String
+  description String?
+  unlockedAt  DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type])
+  @@index([userId])
+  @@map("achievements")
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@map("settings")
+}
+
+model UserLevel {
+  id             String    @id @default(uuid())
+  userId         String    @unique
+  xp             Int       @default(0)
+  level          Int       @default(1)
+  totalXP        Int       @default(0)
+  streak         Int       @default(0)
+  bestStreak     Int       @default(0)
+  lastDaily      DateTime?
+  trackedActions Json      @default("{}")
+  dailyLimits    Json      @default("{}")
+  history        Json      @default("[]")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_levels")
+}
+
+model XPAuditLog {
+  id                 String   @id @default(uuid())
+  userId             String
+  username           String
+  amount             Int
+  reason             String
+  source             String   // 'coffee-made' | 'coffee-brought' | 'achievement' | 'rating' | 'manual' | 'system-correction'
+  sourceId           String?
+  sourceIdentifier   String?  // Chave única para prevenir duplicação
+  metadata           Json     @default("{}")
+  balanceBefore      Int
+  balanceAfter       Int
+  status             String   @default("pending") // 'pending' | 'confirmed' | 'failed' | 'reversed'
+  timestamp          DateTime
+  reversedAt         DateTime?
+  reversedReason     String?
+  createdAt          DateTime @default(now())
+
+  @@index([userId])
+  @@index([sourceIdentifier])
+  @@index([status])
+  @@index([timestamp])
+  @@index([source])
+  @@map("xp_audit_logs")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum CoffeeType {
+  MADE
+  BROUGHT
+}
+
+// 🆕 Comunicados/Anúncios do sistema
+model Announcement {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  priority    AnnouncementPriority @default(NORMAL)
+  authorId    String
+  active      Boolean  @default(true)
+  expiresAt   DateTime?  // Opcional: data de expiração
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  author      User     @relation("AnnouncementAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([active])
+  @@index([createdAt])
+  @@map("announcements")
+}
+
+// 🆕 Sugestões dos usuários
+model Suggestion {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  status      SuggestionStatus @default(PENDING)
+  authorId    String
+  adminNotes  String?  // Notas do admin sobre a sugestão
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  author      User     @relation("SuggestionAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("suggestions")
+}
+
+enum AnnouncementPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum SuggestionStatus {
+  PENDING     // Aguardando análise
+  REVIEWING   // Em análise
+  APPROVED    // Aprovada
+  REJECTED    // Rejeitada
+  IMPLEMENTED // Implementada
+}

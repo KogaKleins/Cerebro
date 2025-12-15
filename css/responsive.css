@@ -1,0 +1,903 @@
+/* ===== RESPONSIVE DESIGN - MOBILE FIRST ===== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-card {
+        padding: 35px;
+    }
+    
+    .brain-animation {
+        font-size: 4rem;
+    }
+    
+    .hero-card h2 {
+        font-size: 1.6rem;
+    }
+    
+    /* Toast repositioning for tablets */
+    .toast-container {
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+/* Mobile Large */
+@media (max-width: 768px) {
+    /* Show mobile menu toggle */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .mobile-overlay {
+        display: block;
+    }
+    
+    /* Sidebar transforms for mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    /* When sidebar is open on mobile, always show full content */
+    .sidebar.mobile-open .logo span,
+    .sidebar.mobile-open .nav-item a span,
+    .sidebar.mobile-open .user-details {
+        opacity: 1;
+        max-width: 150px;
+    }
+    
+    .sidebar.mobile-open .nav-item a {
+        justify-content: flex-start;
+        padding-left: 16px;
+    }
+    
+    .sidebar.mobile-open .sidebar-header {
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+    
+    .sidebar.mobile-open .user-info {
+        justify-content: flex-start;
+    }
+    
+    /* Remove hover behavior on mobile */
+    .sidebar:hover {
+        width: var(--sidebar-width);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: var(--spacing-md);
+        padding-top: 70px; /* Space for mobile toggle */
+    }
+    
+    /* Header */
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Hero Section */
+    .hero-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .brain-animation {
+        font-size: 3rem;
+    }
+    
+    .hero-card h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hero-card p {
+        font-size: 1rem;
+    }
+    
+    /* Stats */
+    .fun-stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .stat-number {
+        font-size: 1.6rem;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+    }
+    
+    /* Quotes */
+    .fun-quotes {
+        padding: var(--spacing-md);
+    }
+    
+    .fun-quotes p {
+        font-size: 1.1rem;
+    }
+    
+    /* Coffee Dashboard */
+    .coffee-dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .coffee-hero {
+        padding: var(--spacing-md);
+    }
+    
+    .coffee-status i {
+        font-size: 2.5rem;
+    }
+    
+    .coffee-status span {
+        font-size: 1rem;
+    }
+    
+    /* Ranking */
+    .ranking-tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .ranking-item {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .ranking-item .rank {
+        font-size: 1.3rem;
+    }
+    
+    .ranking-item .name {
+        font-size: 0.9rem;
+    }
+    
+    /* Chat */
+    .chat-container {
+        height: 400px;
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .chat-input-container {
+        padding: 10px;
+        gap: 8px;
+    }
+    
+    .btn-send {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    /* Team Grid */
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .team-motto {
+        padding: var(--spacing-md);
+    }
+    
+    .team-motto p {
+        font-size: 1.1rem;
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 15px;
+    }
+    
+    /* Header */
+    .page-header {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    /* Hero */
+    .hero-card {
+        padding: var(--spacing-md);
+    }
+    
+    .brain-animation {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero-card h2 {
+        font-size: 1.2rem;
+    }
+    
+    .hero-card p {
+        font-size: 0.9rem;
+    }
+    
+    /* Stats */
+    .fun-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.4rem;
+    }
+    
+    /* Quotes */
+    .fun-quotes p {
+        font-size: 1rem;
+    }
+    
+    .fun-quotes .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Coffee */
+    .coffee-hero {
+        padding: 15px;
+    }
+    
+    .coffee-status {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .coffee-status i {
+        font-size: 2rem;
+    }
+    
+    .coffee-ranking,
+    .coffee-history {
+        padding: 15px;
+    }
+    
+    /* POP Section - Mobile Small */
+    .coffee-pop-section {
+        padding: 15px;
+    }
+    
+    .pop-badge {
+        position: relative;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-size: 0.65rem;
+    }
+    
+    .pop-content {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+    
+    .pop-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto;
+    }
+    
+    .pop-icon i {
+        font-size: 1.8rem;
+    }
+    
+    .pop-info h3 {
+        font-size: 1.1rem;
+        justify-content: center;
+    }
+    
+    .pop-description {
+        font-size: 0.9rem;
+    }
+    
+    .pop-meta {
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .pop-meta span {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    
+    .btn-pop {
+        padding: 14px var(--spacing-md);
+        font-size: 0.95rem;
+    }
+    
+    .btn-pop i {
+        font-size: 1.1rem;
+    }
+    
+    .pop-warning {
+        font-size: 0.75rem;
+    }
+    
+    .coffee-pop-section::after {
+        font-size: 5rem;
+        right: -30px;
+    }
+
+    .ranking-item {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .history-item {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* Buttons */
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+    }
+    
+    /* Chat */
+    .chat-container {
+        height: 350px;
+    }
+    
+    .chat-messages {
+        padding: 15px;
+    }
+    
+    .message {
+        max-width: 95%;
+    }
+    
+    .message-content {
+        padding: 10px 14px;
+    }
+    
+    .message-text {
+        font-size: 0.9rem;
+    }
+    
+    .chat-input-container input {
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
+    
+    .btn-send {
+        width: 42px;
+        height: 42px;
+        font-size: 0.95rem;
+    }
+    
+    /* Team */
+    .team-card {
+        padding: var(--spacing-md);
+    }
+    
+    .team-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+    
+    .team-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .team-motto {
+        padding: var(--spacing-md);
+    }
+    
+    .team-motto p {
+        font-size: 1rem;
+    }
+    
+    /* Modal */
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 15px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .form-group input {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    
+    .modal-footer .btn-primary,
+    .modal-footer .btn-secondary {
+        width: 100%;
+    }
+    
+    /* PDF Modal Mobile */
+    .pdf-modal .pdf-modal-content {
+        width: 98%;
+        height: 95vh;
+        max-height: none;
+        border-radius: var(--radius-lg);
+    }
+    
+    .pdf-modal-header {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .pdf-modal-title-area {
+        gap: 10px;
+    }
+    
+    .pdf-title-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .pdf-title-icon i {
+        font-size: 1.2rem;
+    }
+    
+    .pdf-modal-header h3 {
+        font-size: 1rem;
+    }
+    
+    .pdf-subtitle {
+        font-size: 0.75rem;
+    }
+    
+    .pdf-close {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .pdf-modal-footer {
+        flex-direction: column;
+        gap: 10px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .pdf-footer-info {
+        justify-content: center;
+        font-size: 0.75rem;
+    }
+    
+    .pdf-footer-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .pdf-footer-actions .btn-primary,
+    .pdf-footer-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .pdf-loading-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .pdf-loading-icon i {
+        font-size: 1.8rem;
+    }
+
+    /* Toast for mobile */
+    .toast-container {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+    
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* Mobile Extra Small */
+@media (max-width: 360px) {
+    .page-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .hero-card h2 {
+        font-size: 1.1rem;
+    }
+    
+    .brain-animation {
+        font-size: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+    }
+    
+    .fun-quotes p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Landscape Mode */
+@media (max-height: 500px) and (orientation: landscape) {
+    .chat-container {
+        height: 250px;
+    }
+    
+    .hero-card {
+        padding: var(--spacing-md);
+    }
+    
+    .brain-animation {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* ===== SAFE AREA SUPPORT (iPhone X+) ===== */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .sidebar-footer {
+        padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+    }
+    
+    .chat-input-container {
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    
+    .modal-footer {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+    
+    .main-content {
+        padding-bottom: calc(var(--spacing-lg) + env(safe-area-inset-bottom));
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets - mínimo 44x44px */
+    .nav-item a {
+        padding: 16px;
+        min-height: 48px;
+    }
+    
+    .btn-primary,
+    .btn-secondary,
+    .btn-send,
+    .btn-danger {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .tab-btn {
+        min-height: 44px;
+        padding: 12px 16px;
+    }
+    
+    .toggle-btn,
+    .modal-close {
+        min-width: 48px;
+        min-height: 48px;
+    }
+    
+    .rating-stars .star {
+        font-size: 2rem;
+        padding: 8px;
+    }
+    
+    .history-item {
+        padding: 16px;
+    }
+    
+    .ranking-item {
+        padding: 14px;
+    }
+    
+    /* Remove hover effects on touch */
+    .stat-card:hover,
+    .team-card:hover,
+    .glass-card:hover {
+        transform: none;
+    }
+    
+    /* Active states instead of hover */
+    .stat-card:active,
+    .team-card:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    .btn-primary:active,
+    .btn-secondary:active {
+        transform: scale(0.95);
+    }
+    
+    /* Better scrolling */
+    .chat-messages,
+    .nav-links,
+    .history-list,
+    .ranking-list {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    /* Prevent text selection on buttons */
+    button,
+    .tab-btn,
+    .nav-item {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .brain-animation {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+    
+    .hero-card h2 {
+        font-size: 1.2rem;
+    }
+    
+    .fun-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .stat-card {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+    }
+    
+    .chat-container {
+        height: 250px;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Sharper borders and shadows */
+    .glass-card {
+        border-width: 0.5px;
+    }
+    
+    .sidebar {
+        border-right-width: 0.5px;
+    }
+}
+
+/* ===== CONTAINER QUERIES (Modern browsers) ===== */
+@supports (container-type: inline-size) {
+    .coffee-dashboard {
+        container-type: inline-size;
+    }
+    
+    @container (max-width: 500px) {
+        .coffee-hero {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .coffee-status {
+            flex-direction: column;
+        }
+    }
+    
+    .team-section {
+        container-type: inline-size;
+    }
+    
+    @container (max-width: 400px) {
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+/* ===== HOME PAGE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .sector-status {
+        padding: var(--spacing-md);
+    }
+    
+    .status-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .status-item {
+        padding: var(--spacing-sm);
+    }
+    
+    .status-value {
+        font-size: 1.2rem;
+    }
+    
+    .hero-badges {
+        gap: 8px;
+    }
+    
+    .hero-badge {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .recent-activity {
+        padding: var(--spacing-md);
+    }
+    
+    .activity-timeline {
+        max-height: 200px;
+    }
+    
+    .activity-item {
+        padding: 8px;
+    }
+    
+    .quick-actions {
+        padding: var(--spacing-md);
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .action-btn {
+        padding: 15px;
+    }
+    
+    .action-btn i {
+        font-size: 1.5rem;
+    }
+    
+    .action-btn span {
+        font-size: 0.8rem;
+    }
+    
+    .quote-text {
+        font-size: 1.2rem;
+    }
+    
+    .quote-decoration {
+        font-size: 2.5rem;
+        top: 10px;
+        left: 15px;
+    }
+    
+    .stat-trend {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .status-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .actions-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .hero-badges {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .animated-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .btn-primary,
+    .btn-secondary,
+    .toggle-btn,
+    .chat-input-container,
+    .modal {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .page {
+        display: block !important;
+        page-break-after: always;
+    }
+    
+    .glass-card {
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+    }
+}
