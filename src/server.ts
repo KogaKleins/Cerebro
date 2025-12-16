@@ -356,15 +356,7 @@ async function gracefulShutdown(signal: string) {
     logger.info('HTTP server fechado para novas conexões');
   });
   
-  // 2. Destruir WebSocket service (limpa filas, rate limiters, etc)
-  try {
-    if (socketService) {
-      socketService.destroy();
-      logger.info('WebSocket service destruído');
-    }
-  } catch (error) {
-    logger.error('Erro ao destruir WebSocket service', { error });
-  }
+  
   
   // 3. Aguardar filas processarem (máximo 10 segundos)
   logger.info('Aguardando filas finalizarem...');
